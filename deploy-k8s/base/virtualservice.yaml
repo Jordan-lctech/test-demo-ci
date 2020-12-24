@@ -1,0 +1,28 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: virtualservice
+  labels:
+    k8s-app: goappk8s
+spec:
+  hosts: 
+    - "*"
+  gateways:
+    - goappk8s-gateway
+  http:
+    - route:
+        - destination:
+            host: goapp-svc
+            port:
+              number: 8080
+      corsPolicy:
+        allowOrigin:
+          - "*"
+        allowMethods:
+          - GET
+          - POST
+        allowCredentials: true
+      headers:
+        response:
+          add:
+            "running-version": "版本號"

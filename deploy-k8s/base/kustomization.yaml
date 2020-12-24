@@ -1,0 +1,4 @@
+resources:
+- deploy.yaml
+- configMap.yaml
+- virtualservice.yaml
