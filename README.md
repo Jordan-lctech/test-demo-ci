@@ -1,10 +1,15 @@
 # test-new-ci
 
-DEV: 測試 STAGING: 準測試 PROD 正式
+## workfllow 原則
 
----
+|name|env|db|
+|-|-|-|
+|LOCAL|本地|本地|
+|DEV|測試|測試資料庫|
+|STAGING|上線前測試 A/B |正式資料庫| 
+|PROD|正式|正式資料庫|
 
-Git branch :
+Git branch 對照:
 
 - main -> prod
 - pr (dev->main) -> staging ( one time  just only one !)
