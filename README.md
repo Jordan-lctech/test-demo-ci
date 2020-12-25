@@ -1,17 +1,28 @@
 # test-new-ci
 
-istio / github action / kustomize
+DEV: 測試 STAGING: 準測試 PROD 正式
+
+---
+
+Git branch :
+
+- main -> prod
+- pr (dev->main) -> staging ( one time  just only one !)
+- dev -> DEV
+- pr (featrue->dev) -> local  
+
+---
+
+tool : istio / github action / kustomize
 
 ## TODO
 
-DEV: 測試 STAGING: 準測試 PROD 正式
-
+- [x] 1 GKE with 3 StageMode
 - [ ] cicd ( github action )
   - [ ] testing 單元測試
   - [ ] notify
   - [ ] notify button
-- [ ] 提高 config 編輯性
-- [ ] 1 GKE with 3 StageMode
+- [ ] 提高 config 編輯性 ( josh )
 
 demo Docker image:
 
@@ -21,7 +32,26 @@ demo Docker image:
 
 ### DEVOPS 架構範例
 
-demo architectur
+```sh
+├── deploy-k8s
+│   ├── base
+│   │   ├── configMap.yaml
+│   │   ├── deploy.yaml
+│   │   ├── kustomization.yaml
+│   │   └── virtualservice.yaml
+│   ├── init-istio
+│   │   └── gateway.yaml
+│   └── overlays
+│       ├── dev
+│       │   ├── config.yaml
+│       │   └── kustomization.yaml
+│       ├── prod
+│       │   ├── config.yaml
+│       │   └── kustomization.yaml
+│       └── staging
+│           ├── config.yaml
+│           └── kustomization.yaml
+```
 
 ### demo APP 說明
 
@@ -47,4 +77,5 @@ docker run -p8080:8080 --rm test
 ```sh
 kubectl apply -k deploy-k8s/overlays/dev
 # RUN_MODE = "k8s-dev"
+...
 ```

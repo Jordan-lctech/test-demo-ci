@@ -18,6 +18,9 @@ func headers(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 }
+func allwaysisok() bool {
+	return true
+}
 
 func main() {
 	http.HandleFunc("/hello", hello)
