@@ -21,18 +21,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Set up Go 1.15
-      uses: actions/setup-go@v2
-      with:
-        go-version: ^1.15
+      run: echo "hi" > hi.txt
   docker-test:
     needs: docker-build
     name: docker-test 鏡像測試
     runs-on: ubuntu-latest
     steps:
     - name: Set up Go 1.15
-      uses: actions/setup-go@v2
-      with:
-        go-version: ^1.15
+      run: cat hi.txt
   upload-image:
     needs: [docker-build]
     name: upload-image 鏡像上傳
