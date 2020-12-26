@@ -5,7 +5,7 @@ on:
 jobs:
   unit-test:
     name: unit-test 單元測試
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - name: Set up Go 1.15
       uses: actions/setup-go@v2
@@ -18,21 +18,21 @@ jobs:
   docker-build:
     needs: unit-test
     name: docker-build 打包鏡像
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
-    - name: Set up Go 1.15
+    - name: docker-build 打包鏡像
       run: echo "hi" > hi.txt && pwd && ls
   docker-test:
     needs: docker-build
     name: docker-test 鏡像測試
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
-    - name: Set up Go 1.15
+    - name: docker-test 鏡像測試
       run: pwd && ls && cat hi.txt
   upload-image:
     needs: [docker-build]
     name: upload-image 鏡像上傳
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - name: Set up Go 1.15
       uses: actions/setup-go@v2
@@ -41,7 +41,7 @@ jobs:
   release:
     needs: upload-image
     name: Release to GCP 發佈程式
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - name: Setup gcloud
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
@@ -78,7 +78,7 @@ jobs:
   notify:
     needs: release
     name: notify 通知
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - name: Set up Go 1.15
       uses: actions/setup-go@v2
@@ -87,7 +87,7 @@ jobs:
   intergration-tests:
     needs: release
     name: Intergration Test 整合測試
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - name: Set up Go 1.15
       uses: actions/setup-go@v2
@@ -96,7 +96,7 @@ jobs:
   e2e-tests:
     needs: release
     name: e2e Test 點對點測試
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - name: Set up Go 1.15
       uses: actions/setup-go@v2
@@ -105,7 +105,7 @@ jobs:
   notify-fail:
     name: Ci fail 失敗通知
     needs: notify
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     if: always() # set always
     steps:
       - uses: technote-space/workflow-conclusion-action@v2
