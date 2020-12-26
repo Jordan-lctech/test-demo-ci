@@ -22,6 +22,8 @@ jobs:
     steps:
     - name: docker-build 打包鏡像
       run: echo "hi" > hi.txt && pwd && ls
+    outputs:
+      output1: ${{ steps.outputs.test }}
   docker-test:
     needs: docker-build
     name: docker-test 鏡像測試
