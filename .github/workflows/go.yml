@@ -21,16 +21,16 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - name: docker-build 打包鏡像
-      run: echo "hi" > hi.txt && pwd && ls
+      run: echo "hi" > hi && pwd && ls
     outputs:
-      output1: ${{ steps.outputs.test }}
+      output1: ${{ steps.outputs.hi }}
   docker-test:
     needs: docker-build
     name: docker-test 鏡像測試
     runs-on: ubuntu-20.04
     steps:
     - name: docker-test 鏡像測試
-      run: pwd && ls && cat hi.txt
+      run: pwd && ls && echo ${{needs.job1.outputs.output1}}
   upload-image:
     needs: [docker-build]
     name: upload-image 鏡像上傳
