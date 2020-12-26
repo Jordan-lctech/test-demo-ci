@@ -79,15 +79,6 @@ jobs:
       run: |-
           ehco "do"
 #         kubectl apply -f ./nd-om.yaml
-  intergration-tests:
-    needs: release
-    name: Intergration Test 整合測試
-    runs-on: ubuntu-latest
-    steps:
-    - name: Set up Go 1.15
-      uses: actions/setup-go@v2
-      with:
-        go-version: ^1.15 
   notify:
     needs: release
     name: notify 通知
@@ -97,6 +88,15 @@ jobs:
       uses: actions/setup-go@v2
       with:
         go-version: ^1.15
+  intergration-tests:
+    needs: release
+    name: Intergration Test 整合測試
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up Go 1.15
+      uses: actions/setup-go@v2
+      with:
+        go-version: ^1.15 
   e2e-tests:
     needs: release
     name: e2e Test 點對點測試
@@ -108,7 +108,7 @@ jobs:
         go-version: ^1.15
   notify-fail:
     name: Ci fail 失敗通知
-    needs: e2e-tests
+    needs: notify
     runs-on: ubuntu-latest
     if: always() # set always
     steps:
