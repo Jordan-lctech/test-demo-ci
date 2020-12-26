@@ -4,7 +4,7 @@ on:
     branches: [ main,master ]
 jobs:
   unit-test:
-    name: unit-test
+    name: unit-test 單元測試
     runs-on: ubuntu-latest
     steps:
     - name: Set up Go 1.15
@@ -17,7 +17,7 @@ jobs:
       run: go test -v ./...
   docker-build:
     needs: unit-test
-    name: docker-build
+    name: docker-build 打包鏡像
     runs-on: ubuntu-latest
     steps:
     - name: Set up Go 1.15
@@ -26,7 +26,7 @@ jobs:
         go-version: ^1.15
   docker-test:
     needs: docker-build
-    name: docker-test
+    name: docker-test 鏡像測試
     runs-on: ubuntu-latest
     steps:
     - name: Set up Go 1.15
@@ -34,8 +34,8 @@ jobs:
       with:
         go-version: ^1.15
   upload-image:
-    needs: [docker-build,docker-test]
-    name: upload-image
+    needs: [docker-build]
+    name: upload-image 鏡像上傳
     runs-on: ubuntu-latest
     steps:
     - name: Set up Go 1.15
@@ -44,7 +44,7 @@ jobs:
         go-version: ^1.15
   release:
     needs: upload-image
-    name: Release to GCP
+    name: Release to GCP 發佈程式
     runs-on: ubuntu-latest
     steps:
     - name: Setup gcloud
@@ -81,7 +81,7 @@ jobs:
 #         kubectl apply -f ./nd-om.yaml
   intergration-tests:
     needs: release
-    name: Intergration Test
+    name: Intergration Test 整合測試
     runs-on: ubuntu-latest
     steps:
     - name: Set up Go 1.15
@@ -90,7 +90,7 @@ jobs:
         go-version: ^1.15 
   notify:
     needs: release
-    name: notify
+    name: notify 通知
     runs-on: ubuntu-latest
     steps:
     - name: Set up Go 1.15
@@ -99,7 +99,7 @@ jobs:
         go-version: ^1.15
   e2e-tests:
     needs: release
-    name: e2e Test
+    name: e2e Test 點對點測試
     runs-on: ubuntu-latest
     steps:
     - name: Set up Go 1.15
